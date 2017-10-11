@@ -1,12 +1,8 @@
+'use strict';
 require('dotenv').config();
 
 const path = require('path');
 const chalk = require('chalk');
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-
-chai.should();
-chai.use(chaiAsPromised);
 
 // This is used by all the tests, so it's much easier to set it here.
 const config = {
@@ -28,12 +24,6 @@ global.assetsDir = assetsDir;
 // Stores the resource information for newly created instances.  This
 // prvents the need to read and write to a JSON file.
 global.resources = {};
-
-// All the good testing stuff.
-global.chai = chai;
-global.AssertionError = chai.AssertionError;
-global.expect = chai.expect;
-global.assert = chai.assert;
 
 /* istanbul ignore next */
 const validateTestEnvironment = () => {

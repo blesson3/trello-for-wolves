@@ -1,72 +1,57 @@
 /* Internal dependencies */
 import Trello from '../../src/index';
-import performApiRequest from '../../src/utils/api-request';
 
 describe('ARQ | API Request', function() {
   let trello;
   let boardId = '';
   let listId = '';
+  let isSkipped = false;
 
-  before(function() {
-    trello = new Trello(config);
-    if (resources.board) {
-      boardId = resources.board.id;
+  beforeAll(() => {
+    trello = new Trello(global.config);
+    if (global.resources.board) {
+      boardId = global.resources.board.id;
     } else {
-      this.skip();
+      isSkipped = true;
     }
   });
 
-  describe('ARQ-SETUP | API Request Setup', function() {
-    it('ARQ-SETUP-T01 | creates a List on a Board for testing rate limits', function(done) {
-      trello.boards(boardId).lists().addList({
+  describe('ARQ-SETUP | API Request Setup', () => {
+    test('ARQ-SETUP-T01 | creates a List on a Board for testing rate limits', async () => {
+      if (isSkipped) return expect(Promise.resolve()).resolves.toBeDefined();
+      expect.assertions(1);
+      const response = await trello.boards(boardId).lists().addList({
         name: 'ARQ-SETUP-T01',
-      })
-        .then((response) => {
-          if (response.data) {
-            listId = response.data.id;
-          }
-          assert.isDefined(response.data);
-          done();
-        })
-        .catch(error => done(error));
+      });
+      if (response.data) listId = response.data.id;
+      expect(response.data).toBeDefined();
     });
   });
 
   describe('ARQ-EXECUTE | API Request Test Execution', function() {
-    before(function() {
-      if (!listId) {
-        throw new Error('List Id not found.  API request testing cannot proceed.')
-      }
+    beforeAll(() => {
+      if (!listId) throw new Error('List Id not found.  API request testing cannot proceed.');
     });
 
-    it('ARQ-EXECUTE-T01 | creates 110 Cards in a List to validate rate limiter', function(done) {
-      this.timeout(0);
+    it('ARQ-EXECUTE-T01 | creates 110 Cards in a List to validate rate limiter', async () => {
+      if (isSkipped) return expect(Promise.resolve()).resolves.toBeDefined();
       let queuedRequests = [];
       for (let i = 0; i < 110; i++) {
         queuedRequests.push(trello.lists(listId).cards().addCard({ name: `(1) CARD-${i}` }));
       }
-      Promise.all(queuedRequests)
-        .then((responses) => {
-          expect(responses.length).to.equal(110);
-          done();
-        })
-        .catch(error => done(error));
+      expect.assertions(1);
+      const responses = await Promise.all(queuedRequests);
+      expect(responses.length).toEqual(110);
     });
 
-    it('ARQ-EXECUTE-T02 | deletes 110 Cards in a List to validate rate limiter', function(done) {
-      this.timeout(0);
-      trello.lists(listId).cards().getCards({ fields: 'idList' })
-        .then((response) => {
-          const cardIds = response.data.map(item => item.id);
-          const deletionRequests = cardIds.map(cardId => trello.cards(cardId).deleteCard());
-          Promise.all(deletionRequests)
-            .then((responses) => {
-              expect(responses.length).to.equal(110);
-              done();
-            })
-            .catch(error => done(error));
-        })
-        .catch(error => done(error));
+    it('ARQ-EXECUTE-T02 | deletes 110 Cards in a List to validate rate limiter', async () => {
+      if (isSkipped) return expect(Promise.resolve()).resolves.toBeDefined();
+      expect.assertions(1);
+      const response = await trello.lists(listId).cards().getCards({ fields: 'idList' });
+      const cardIds = response.data.map(item => item.id);
+      const deletionRequests = cardIds.map(cardId => trello.cards(cardId).deleteCard());
+      const responses = await Promise.all(deletionRequests);
+      expect(responses.length).toEqual(110);
     });
   });
 });

@@ -1,5 +1,4 @@
 /* External dependencies */
-import { Readable } from 'stream';
 import fs from 'fs';
 
 /* Internal dependencies */
@@ -9,8 +8,8 @@ import performApiRequest from '../src/utils/api-request';
 describe('Manual Tests', function() {
   let trello;
 
-  before(function() {
-    trello = new Trello(config);
+  beforeAll(function() {
+    trello = new Trello(global.config);
   });
 
   it.skip('posts a text file attachment to a Card using streams', function(done) {
@@ -22,7 +21,7 @@ describe('Manual Tests', function() {
       mimeType: 'text/plain'
     })
       .then((response) => {
-        assert.isDefined(response.data);
+        expect(response.data).toBeDefined();
         done();
       })
       .catch(error => done(error));
@@ -32,8 +31,7 @@ describe('Manual Tests', function() {
     performApiRequest('yep', '1', 3, 300)
       .then(response => done())
       .catch((error) => {
-        // console.log(error);
-        expect(error.name).to.equal('ApiCallResponseError');
+        expect(error.name).toEqual('ApiCallResponseError');
         done();
       });
   });

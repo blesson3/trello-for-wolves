@@ -14,9 +14,6 @@
         "transform-object-rest-spread",
         "add-module-exports"
       ]
-    },
-    "test": {
-      "plugins": ["istanbul"]
     }
   }
 }
