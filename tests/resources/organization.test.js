@@ -11,7 +11,7 @@ describe('ORG | Organization Resource', function() {
   let testMember = {};
 
   before(function() {
-    trello = new Trello(config);
+    trello =  new Trello(global.config);
     logger = new Logger();
     if (resources.org) {
       orgId = resources.org.id;
@@ -34,7 +34,7 @@ describe('ORG | Organization Resource', function() {
 
   describe('ORG-G | Organization GET requests', function() {
     before(function(done) {
-      setTimeout(() => { done(); }, testDelay);
+      setTimeout(() => done(), global.testDelay);
     });
 
     it('ORG-G-01-T01 | gets an Organization', function(done) {
@@ -255,7 +255,7 @@ describe('ORG | Organization Resource', function() {
 
   describe('ORG-U | Organization PUT requests', function() {
     before(function(done) {
-      setTimeout(() => { done(); }, testDelay);
+      setTimeout(() => done(), global.testDelay);
     });
 
     it('ORG-U-01-T01 | updates an Organization', function(done) {

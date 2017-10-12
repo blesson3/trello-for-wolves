@@ -2,7 +2,7 @@
 import stringifyQueryArgs from '../../src/utils/query-args-stringifier';
 
 describe('QAS | Query Args Stringifier', () => {
-  it('QAS-T01 | stringifies query args with a single string arg', () => {
+  test('QAS-T01 | stringifies query args with a single string arg', () => {
     const queryArgs = {
       actionsFormat: 'count',
     };
@@ -11,7 +11,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T02 | stringifies query args with multiple string args', () => {
+  test('QAS-T02 | stringifies query args with multiple string args', () => {
     const queryArgs = {
       actionsFormat: 'count',
       field: 'data',
@@ -21,7 +21,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T03 | stringifies query args with a single boolean arg', () => {
+  test('QAS-T03 | stringifies query args with a single boolean arg', () => {
     const queryArgs = {
       actionsEntities: true,
     };
@@ -30,7 +30,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T04 | stringifies query args with multiple boolean args', () => {
+  test('QAS-T04 | stringifies query args with multiple boolean args', () => {
     const queryArgs = {
       actionsEntities: true,
       display: false,
@@ -40,7 +40,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T05 | stringifies query args with a single comma separated arg', () => {
+  test('QAS-T05 | stringifies query args with a single comma separated arg', () => {
     const queryArgs = {
       actions: ['copyBoard', 'copyCard'],
     };
@@ -49,7 +49,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T06 | stringifies query args with multiple comma separated args', () => {
+  test('QAS-T06 | stringifies query args with multiple comma separated args', () => {
     const queryArgs = {
       actions: ['copyBoard', 'copyCard'],
       memberFields: 'bio,fullName',
@@ -59,7 +59,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T07 | stringifies query args with multiple args of one type each', () => {
+  test('QAS-T07 | stringifies query args with multiple args of one type each', () => {
     const queryArgs = {
       actionsFormat: 'count',
       actionsEntities: true,
@@ -71,7 +71,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T08 | stringifies query args with multiple args with multiple types', () => {
+  test('QAS-T08 | stringifies query args with multiple args with multiple types', () => {
     const queryArgs = {
       actionsFormat: 'count',
       field: 'data',
@@ -87,7 +87,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T09 | stringifies query args for a single special case', () => {
+  test('QAS-T09 | stringifies query args for a single special case', () => {
     const queryArgs = {
       memberCreatorFields: ['bio', 'fullName'],
     };
@@ -96,7 +96,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T10 | stringifies query args for nested args with a slash separator', () => {
+  test('QAS-T10 | stringifies query args for nested args with a slash separator', () => {
     const queryArgs = {
       prefs: {
         selfJoin: true,
@@ -108,7 +108,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T11 | stringifies query args for nested args with an underscore separator', () => {
+  test('QAS-T11 | stringifies query args for nested args with an underscore separator', () => {
     const queryArgs = {
       prefs: {
         selfJoin: true,
@@ -120,7 +120,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T12 | stringifies any args in excludedKeys', () => {
+  test('QAS-T12 | stringifies any args in excludedKeys', () => {
     const queryArgs = {
       avatarSource: 0,
       boardBackgrounds: 0,
@@ -160,7 +160,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T13 | stringifies query args that needs to be recased', () => {
+  test('QAS-T13 | stringifies query args that needs to be recased', () => {
     const queryArgs = {
       memberCreator: 0,
       membersVoted: 0,
@@ -176,7 +176,7 @@ describe('QAS | Query Args Stringifier', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
-  it('QAS-T14 | stringifies query args for Enterprise routes', () => {
+  test('QAS-T14 | stringifies query args for Enterprise routes', () => {
     const queryArgs = {
       sortBy: 0,
       sortOrder: 0,

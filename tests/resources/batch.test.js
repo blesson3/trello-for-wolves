@@ -1,54 +1,37 @@
+/* External dependencies */
+import skipIf from 'skip-if';
+
 /* Internal dependencies */
 import Trello from '../../src/index';
-import Logger from '../../internals/testing/logger';
 
-describe('BTC | Batch Resource', function() {
+describe('BTC | Batch Resource', () => {
+  const { board = { id: 0 }, card = { id: 0 } } = global.resources;
   let trello;
-  let logger;
 
-  before(function(done) {
-    trello = new Trello(config);
-    logger = new Logger();
-    setTimeout(() => { done(); }, testDelay);
+  beforeAll((done) => {
+    trello =  new Trello(global.config);
+    setTimeout(() => done(), global.testDelay);
   });
 
-  beforeEach(function() {
-    logger.setTestName(this.currentTest.title);
-  });
+  describe('BTC-G | Batch GET requests', () => {
+    let isSkipped = false;
 
-  after(function(done) {
-    logger.writeResultsToFile('batch')
-      .then(() => done())
-      .catch(error => done(error));
-  });
-
-  const logResponse = (response) => logger.processResponse(response);
-
-  describe('BTC-G | Batch GET requests', function() {
-    before(function() {
-      if (!resources.board || !resources.card) {
-        this.skip();
-      }
+    before(() => {
+      isSkipped = (board.id === 0 || card.id === 0);
     });
 
-    it('BTC-G-01-T01 | performs a batch request when passed correct URLs', function (done) {
-      trello.batch().makeRequests([
-        `/boards/${resources.board.id}`,
-        `/cards/${resources.card.id}`
-      ])
-        .then(logResponse)
-        .should.eventually.be.fulfilled
-        .notify(done);
+    skipIf((isSkipped), 'BTC-G-01-T01 | performs a batch request when passed correct URLs', () => {
+      expect.assertions(1);
+      return expect(
+        trello.batch().makeRequests([`/boards/${board.id}`, `/cards/${card.id}`])
+      ).resolves.toBeDefined();
     });
 
-    it('BTC-G-01-T02 | fails gracefully when passed an invalid URL', function (done) {
-      trello.batch().makeRequests([
-        `/boards${resources.board.id}`, // Note the missing slash.
-        `/cards/${resources.card.id}`
-      ])
-        .then(logResponse)
-        .should.eventually.be.rejected
-        .notify(done);
+    skipIf((isSkipped), 'BTC-G-01-T02 | fails gracefully when passed an invalid URL', () => {
+      expect.assertions(1);
+      return expect(
+        trello.batch().makeRequests([`/boards${board.id}`, `/cards/${card.id}`])
+      ).resolves.toBeDefined();
     });
   });
 });

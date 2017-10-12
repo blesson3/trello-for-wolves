@@ -7,9 +7,9 @@ describe('TYP | Type Resource', function() {
   let logger;
 
   before(function(done) {
-    trello = new Trello(config);
+    trello =  new Trello(global.config);
     logger = new Logger();
-    setTimeout(() => { done(); }, testDelay);
+    setTimeout(() => done(), global.testDelay);
   });
 
   beforeEach(function() {

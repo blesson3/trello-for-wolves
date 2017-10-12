@@ -10,7 +10,7 @@ describe('TKN | Token Resource', function() {
   let tokenValue = '';
 
   before(function() {
-    trello = new Trello(config);
+    trello =  new Trello(global.config);
     logger = new Logger();
     tokenValue = process.env.TRELLO_AUTH_TOKEN || '';
   });
@@ -29,7 +29,7 @@ describe('TKN | Token Resource', function() {
 
   describe('TKN-P | Token POST requests', function () {
     before(function(done) {
-      setTimeout(() => { done(); }, testDelay);
+      setTimeout(() => done(), global.testDelay);
     });
 
     it.skip('TKN-P-01-T01 | creates an associated Webhook', function(done) {
@@ -49,7 +49,7 @@ describe('TKN | Token Resource', function() {
 
   describe('TKN-G | Token GET requests', function () {
     before(function(done) {
-      setTimeout(() => { done(); }, testDelay);
+      setTimeout(() => done(), global.testDelay);
     });
 
     it('TKN-G-01-T01 | gets a Token', function(done) {
@@ -119,7 +119,7 @@ describe('TKN | Token Resource', function() {
 
   describe('TKN-U | Token PUT requests', function () {
     before(function(done) {
-      setTimeout(() => { done(); }, testDelay);
+      setTimeout(() => done(), global.testDelay);
     });
 
     it.skip('TKN-U-01-T01 | adds an associated Webhook', function(done) {
@@ -135,7 +135,7 @@ describe('TKN | Token Resource', function() {
 
   describe('TKN-D | Token DELETE requests', function () {
     before(function(done) {
-      setTimeout(() => { done(); }, testDelay);
+      setTimeout(() => done(), global.testDelay);
     });
 
     it.skip('TKN-D-02-T01 | deletes an associated Webhook', function(done) {
